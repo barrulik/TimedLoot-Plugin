@@ -1,0 +1,16 @@
+name: TimedLoot_By_Barrulik
+version: '${project.version}'
+main: me.barrulik.timedloot.TimedLoot
+api-version: 1.18
+prefix: TIMEDLOOT
+authors: [ Barrulik ]
+description: A cool plugin.
+commands:
+  test:
+    description: Shows your exact health
+    usage: /<command>
+
+
+
+
+
