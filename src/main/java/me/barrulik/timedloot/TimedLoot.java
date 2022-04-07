@@ -29,7 +29,7 @@ public final class TimedLoot extends JavaPlugin implements Listener {
         Player dead = event.getEntity();
         Entity killer = event.getEntity().getKiller();
         if (killer instanceof Player) {
-            Location loc = dead.getLocation().add(0,1,0);
+            Location loc = dead.getLocation().add(0, 1, 0);
             TNTPrimed tnt = (TNTPrimed) dead.getWorld().spawnEntity(loc, EntityType.PRIMED_TNT);
             tnt.setFuseTicks(200);
             new BukkitRunnable() {
@@ -37,47 +37,23 @@ public final class TimedLoot extends JavaPlugin implements Listener {
                 ArmorStand armorStand = (ArmorStand) dead.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
                 @Override
                 public void run() {
-                    if (time<=0)
+                    if (time <= 0) {
                         cancel();
+                        armorStand.remove();
+                    }
                     armorStand.setCustomNameVisible(true);
                     armorStand.setVisible(false);
                     armorStand.setGravity(false);
                     armorStand.setCollidable(false);
-                    armorStand.setCustomName(ChatColor.RED + "" + time + "s until explosion");
-                    time-=.1;
+                    armorStand.setCustomName(ChatColor.RED + "" + round(time) + "s until explosion");
+                    time -= .1;
                 }
-            }.runTaskTimer(this, 2, 1);
+            }.runTaskTimer(this, 1, 2);
         }
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("test")) {
-            if (sender instanceof Player) {
-                Player p = (Player) sender;
-                Location loc = p.getLocation().add(0, 1, 0);
-                TNTPrimed tnt = (TNTPrimed) p.getWorld().spawnEntity(loc, EntityType.PRIMED_TNT);
-                tnt.setFuseTicks(200);
-                new BukkitRunnable() {
-                    double time = 10;
-                    ArmorStand armorStand = (ArmorStand) p.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
-
-                    @Override
-                    public void run() {
-                        if (time <= 0) {
-                            cancel();
-                            armorStand.remove();
-                        }
-                        armorStand.setCustomNameVisible(true);
-                        armorStand.setVisible(false);
-                        armorStand.setGravity(false);
-                        armorStand.setCollidable(false);
-                        armorStand.setCustomName(ChatColor.RED + "" + round(time) + "s until explosion");
-                        time -= .1;
-                    }
-                }.runTaskTimer(this, 1, 2);
-            }
-        }
         return true;
     }
 
