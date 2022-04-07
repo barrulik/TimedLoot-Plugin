@@ -66,4 +66,3 @@ public final class TimedLoot extends JavaPlugin implements Listener {
         return Math.round(num*100)/100.0;
     }
 }
-
